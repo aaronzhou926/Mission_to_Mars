@@ -13,7 +13,7 @@ def index():
     # Return template and data
     return render_template("index.html", mars_info = mars_info)
 
-@app.route('/scape')
+@app.route('/scrape')
 def scape():
 
     mars_info = mongo.db.mars_info
