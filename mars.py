@@ -14,7 +14,7 @@ def index():
     return render_template("index.html", mars_info = mars_info)
 
 @app.route('/scrape')
-def scape():
+def scrape():
 
     mars_info = mongo.db.mars_info
     mars_data = scrape_mars.scrape_mars_news()

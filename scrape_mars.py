@@ -3,6 +3,7 @@ from splinter import Browser
 import pandas as pd
 from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
+import time
 
 
 def init_browser():
@@ -18,17 +19,19 @@ def scrape_mars_news():
     #visist nasa's website
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
     browser.visit(url)
+    time.sleep(5)
 
     #scrap data with beautifulSoup
     html = browser.html
     soup = BeautifulSoup(html,'lxml')
+    
+
     #locate news title and paragraph and assign to variables
     news_title = soup.find('div', class_='content_title').find('a').text
     news_p = soup.find('div', class_='article_teaser_body').text
 
     mars_info['news_title']=news_title
     mars_info['news_paragraph']=news_p
-
     browser.quit()
 
     return mars_info
@@ -41,10 +44,11 @@ def scrape_mars_image():
 
     image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(image_url)
-
+    time.sleep(5)
     #Parse HTML with beautifulsoup
     html= browser.html
     soup = BeautifulSoup(html,'lxml')
+
 
     #scrape background image
     featured_image_url = soup.find('article')['style'].replace('background-image: url(','').replace(');', '')[1:-1]
@@ -61,14 +65,16 @@ def scrape_mars_image():
 
 def scrape_mars_weather():
     browser = init_browser()
+    
 
     #visit twitter page
     twitter_url = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(twitter_url)
-
+    time.sleep(5)
     #parse twitter page with beautifulSoup
     html= browser.html
     soup = BeautifulSoup(html,'lxml')
+
 
     #scrape weather information
     news_title = soup.find('p', class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text').text
@@ -99,10 +105,12 @@ def hemispheres():
 
     hemisphere_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(hemisphere_url)
+    time.sleep(5)
 
     #Parse HTML with beautifulsoup
     html= browser.html
     soup = BeautifulSoup(html,'lxml')
+
     hemisphere_main_url = 'https://astrogeology.usgs.gov'
 
     #scrape background image
