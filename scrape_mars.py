@@ -72,11 +72,12 @@ def scrape():
     mars_pd = pd.read_html(mars_facts_url)
     mars_df = mars_pd[0]
     mars_df.columns = ['Discription','Value']
+    mars_table = dict(zip(mars_df['Discription'],mars_df['Value']))
 
-    clean_table = mars_df.set_index(["Discription"])
-    mars_html_table = clean_table.to_html()
-    mars_html_table = mars_html_table.replace("\n", "")
-    mars_info['mars_facts'] = mars_html_table
+    #clean_table = mars_df.set_index(["Discription"])
+    #mars_html_table = clean_table.to_html()
+    #mars_html_table = mars_html_table.replace("\n", "")
+    mars_info['mars_facts'] = mars_table
 
     hemisphere_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(hemisphere_url)
