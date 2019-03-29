@@ -107,7 +107,7 @@ def scrape():
         soup = BeautifulSoup(partial_image_url, 'lxml')
     
         #scrap image
-        img_url = hemisphere_url + soup.find('img', class_='wide-image')['src']
+        img_url = soup.find('a',{'target':'_blank'})['href']
     
         hemisphere_image.append({'title':title,'img_url':img_url})
     
